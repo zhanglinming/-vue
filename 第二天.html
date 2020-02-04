@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+	</head>
+	<body>
+		<div id="app">
+			{{title}}<!--利用DOM构造绑定数据，{{}}也称小胡子语法-->
+			<div v-once>{{title}}</div><!--v-once改变值，只执行一次-->
+			<p v-bind="myapp">{{title}}</p><!--v-bind用法-->
+			<p :id="myapp">{{title}}</p><!--v-bind用法-->
+			<div v-html="htmlStr"></div><!--v-html用法：嵌入htmlStr，绑定htmlStr,注：使用v-html要防止被xss攻击-->
+			<div>{{number+1}}</div><!--number-->
+			<div>{{panduan ? 1 : 2}}</div><!--三元运算-->
+			<div>{{str.split('').join('-')}}</div><!--split:把一个字符串分割成字符串数组，然后用数组方法进行操作-->
+			<!-- <div>{{var a = 0;if(a) return a}}</div><!--小胡子语法禁止定义变量和if语句--> -->
+			<div>
+				<div v-if="type === 1">type={{type}}</div>
+				<div v-else-if="type ===2">type={{type}}</div><!--v-判断
+				用法-->
+				<div v-else>type={{type}}</div>
+				<div v-show="panduan">{{type}}</div>
+				<div v-on:click="alert(0)">点我啊</div><!--v-on绑定监听事件-->
+			</div>
+			<div>
+				<ul>
+					<li v-for="item in mytitle">{{item.name}}</li>
+				</ul>
+				<input type="text"  v-model="str" /><!--v-model-->
+			</div>
+			<div>
+				<p v-if="!panduan">p标签</p>
+				<button v-on:click="handelClick">点击隐藏p标签</button><!--给button绑定v-on点击事件，v-on:也可以写成@click-->
+			</div>
+		</div>
+		<script>
+			const htmlStr = "<div>开始学vue</div>"<!--定义一个名为htmlStr的字符串-->
+			// var htmlStr = "<div color="blue">开始学vue</div>"<!--定义一个名为htmlStr的字符串-->
+			let app = new Vue({  <!--利用vue的构造函数new一个vue实例-->
+				el:"#app",
+				data:{
+					myapp:"myapp",
+					title:"hello world",
+					number:1,
+					// isShow:true,
+					panduan:false,
+					str:'开始学vue真开心！',
+					type:2,
+					mytitle:[
+						{name:"开始1"},
+						{name:"开始2"},
+						{name:"开始3"},
+						{name:"开始4"},
+						{name:"开始5"},
+					]
+				},
+				methods:{<!--方法默认写在这里methods对象，以函数形式写上-->
+					handelClick(){
+						this.panduan = true   <!--this指绑定的实例本身-->
+					}
+				}
+			})
+			app.$data.title="hello hello"<!--v-once改变值-->
+		</script>
+	</body>
+</html>
